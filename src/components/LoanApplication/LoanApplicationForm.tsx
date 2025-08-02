@@ -37,6 +37,7 @@ import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { Loader2, Download } from 'lucide-react';
 import PrintDialog from './PrintDialog';
 
+// Define the Zod schema for loan application form values
 const loanApplicationSchema = z.object({
   customerName: z.string().min(2, { message: 'Customer Name must be at least 2 characters.' }),
   customerNameHindi: z.string().optional(),
@@ -146,7 +147,7 @@ const documentOptions = [
 ];
 
 const securityOptions = [
-    "  Gold",
+    "Gold",
     "Property",
     "Shop",
     "Vehicle",
@@ -313,97 +314,96 @@ const LoanApplicationForm = ({
   // Auto-translate effect
   useEffect(() => {
     const autoTranslate = async () => {
-      // Required fields
+      // Required fields - applying || '' for type safety
       if (form.watch('customerName') && !form.watch('customerNameHindi')) {
-        const translatedName = await translateToHindi(form.watch('customerName') || ''); // Fix applied
+        const translatedName = await translateToHindi(form.watch('customerName') || ''); 
         form.setValue('customerNameHindi', translatedName);
       }
       if (form.watch('dateOfBirth') && !form.watch('dateOfBirthHindi')) {
-        const translatedText = await translateToHindi(form.watch('dateOfBirth') || ''); // Fix applied
+        const translatedText = await translateToHindi(form.watch('dateOfBirth') || ''); 
         form.setValue('dateOfBirthHindi', translatedText);
       }
       if (form.watch('fatherName') && !form.watch('fatherNameHindi')) {
-        const translatedText = await translateToHindi(form.watch('fatherName') || ''); // Fix applied
+        const translatedText = await translateToHindi(form.watch('fatherName') || ''); 
         form.setValue('fatherNameHindi', translatedText);
       }
       if (form.watch('motherName') && !form.watch('motherNameHindi')) {
-        const translatedText = await translateToHindi(form.watch('motherName') || ''); // Fix applied
+        const translatedText = await translateToHindi(form.watch('motherName') || ''); 
         form.setValue('motherNameHindi', translatedText);
       }
       if (form.watch('mobileNumber') && !form.watch('mobileNumberHindi')) {
-        const translatedText = await translateToHindi(form.watch('mobileNumber') || ''); // Fix applied
+        const translatedText = await translateToHindi(form.watch('mobileNumber') || ''); 
         form.setValue('mobileNumberHindi', translatedText);
       }
       if (form.watch('residentialAddress') && !form.watch('residentialAddressHindi')) {
-        const translatedText = await translateToHindi(form.watch('residentialAddress') || ''); // Fix applied
+        const translatedText = await translateToHindi(form.watch('residentialAddress') || ''); 
         form.setValue('residentialAddressHindi', translatedText);
       }
       if (form.watch('permanentAddress') && !form.watch('permanentAddressHindi')) {
-        const translatedText = await translateToHindi(form.watch('permanentAddress') || ''); // Fix applied
+        const translatedText = await translateToHindi(form.watch('permanentAddress') || ''); 
         form.setValue('permanentAddressHindi', translatedText);
       }
       if (form.watch('companyShopName') && !form.watch('companyShopNameHindi')) {
-        const translatedText = await translateToHindi(form.watch('companyShopName') || ''); // Fix applied
+        const translatedText = await translateToHindi(form.watch('companyShopName') || ''); 
         form.setValue('companyShopNameHindi', translatedText);
       }
       if (form.watch('companyShopAddress') && !form.watch('companyShopAddressHindi')) {
-        const translatedText = await translateToHindi(form.watch('companyShopAddress') || ''); // Fix applied
+        const translatedText = await translateToHindi(form.watch('companyShopAddress') || ''); 
         form.setValue('companyShopAddressHindi', translatedText);
       }
       if (form.watch('identityDocumentType') && !form.watch('identityDocumentHindi')) {
-        const translatedText = await translateToHindi(form.watch('identityDocumentType') || ''); // Fix applied
+        const translatedText = await translateToHindi(form.watch('identityDocumentType') || ''); 
         form.setValue('identityDocumentHindi', translatedText);
       }
-      if (form.watch('identityDocumentNumber') && !form.watch('documentNumberHindi')) { // Assuming documentNumberHindi is for identityDocumentNumber
-        const translatedText = await translateToHindi(form.watch('identityDocumentNumber') || ''); // Fix applied
+      if (form.watch('identityDocumentNumber') && !form.watch('documentNumberHindi')) { 
+        const translatedText = await translateToHindi(form.watch('identityDocumentNumber') || ''); 
         form.setValue('documentNumberHindi', translatedText);
       }
       if (form.watch('addressProofDocumentType') && !form.watch('addressProofDocumentHindi')) {
-        const translatedText = await translateToHindi(form.watch('addressProofDocumentType') || ''); // Fix applied
+        const translatedText = await translateToHindi(form.watch('addressProofDocumentType') || ''); 
         form.setValue('addressProofDocumentHindi', translatedText);
       }
       if (form.watch('guarantorName') && !form.watch('guarantorNameHindi')) {
-        const translatedText = await translateToHindi(form.watch('guarantorName') || ''); // Fix applied
+        const translatedText = await translateToHindi(form.watch('guarantorName') || ''); 
         form.setValue('guarantorNameHindi', translatedText);
       }
-      if (form.watch('guarantorDocumentType') && !form.watch('guarantorDocumentNameHindi')) { // Assuming guarantorDocumentNameHindi is for guarantorDocumentType
-        const translatedText = await translateToHindi(form.watch('guarantorDocumentType') || ''); // Fix applied
+      if (form.watch('guarantorDocumentType') && !form.watch('guarantorDocumentNameHindi')) { 
+        const translatedText = await translateToHindi(form.watch('guarantorDocumentType') || ''); 
         form.setValue('guarantorDocumentNameHindi', translatedText);
       }
       if (form.watch('guarantorDocumentNumber') && !form.watch('guarantorDocumentNumberHindi')) {
-        const translatedText = await translateToHindi(form.watch('guarantorDocumentNumber') || ''); // Fix applied
+        const translatedText = await translateToHindi(form.watch('guarantorDocumentNumber') || ''); 
         form.setValue('guarantorDocumentNumberHindi', translatedText);
       }
       if (form.watch('guarantorMobileNumber') && !form.watch('guarantorMobileNumberHindi')) {
-        const translatedText = await translateToHindi(form.watch('guarantorMobileNumber') || ''); // Fix applied
+        const translatedText = await translateToHindi(form.watch('guarantorMobileNumber') || ''); 
         form.setValue('guarantorMobileNumberHindi', translatedText);
       }
       if (form.watch('guarantorAddress') && !form.watch('guarantorAddressHindi')) {
-        const translatedText = await translateToHindi(form.watch('guarantorAddress') || ''); // Fix applied
+        const translatedText = await translateToHindi(form.watch('guarantorAddress') || ''); 
         form.setValue('guarantorAddressHindi', translatedText);
       }
       if (form.watch('annualIncome') && !form.watch('annualIncomeHindi')) {
-        const translatedText = await translateToHindi(form.watch('annualIncome') || ''); // Fix applied
+        const translatedText = await translateToHindi(form.watch('annualIncome') || ''); 
         form.setValue('annualIncomeHindi', translatedText);
       }
       if (form.watch('monthlyIncome') && !form.watch('monthlyIncomeHindi')) {
-        const translatedText = await translateToHindi(form.watch('monthlyIncome') || ''); // Fix applied
+        const translatedText = await translateToHindi(form.watch('monthlyIncome') || ''); 
         form.setValue('monthlyIncomeHindi', translatedText);
       }
       if (form.watch('loanAmountRequired') && !form.watch('loanAmountRequiredHindi')) {
-        const translatedText = await translateToHindi(form.watch('loanAmountRequired') || ''); // Fix applied
+        const translatedText = await translateToHindi(form.watch('loanAmountRequired') || ''); 
         form.setValue('loanAmountRequiredHindi', translatedText);
       }
 
-      // Optional fields with explicit handling
-      // This was the problematic line in previous logs:
+      // Optional fields with explicit handling (including the original problematic line 248)
       if (form.watch('husbandWifeName') && !form.watch('husbandWifeNameHindi')) {
-        const translatedText = await translateToHindi(form.watch('husbandWifeName') || ''); // Fix applied
+        const translatedText = await translateToHindi(form.watch('husbandWifeName') || ''); 
         form.setValue('husbandWifeNameHindi', translatedText);
       }
 
       if (form.watch('alternateMobileNumber') && !form.watch('alternateMobileNumberHindi')) {
-        const translatedText = await translateToHindi(form.watch('alternateMobileNumber') || ''); // Fix applied
+        const translatedText = await translateToHindi(form.watch('alternateMobileNumber') || ''); 
         form.setValue('alternateMobileNumberHindi', translatedText);
       }
     };
@@ -421,11 +421,11 @@ const LoanApplicationForm = ({
     form.watch('permanentAddress'),
     form.watch('companyShopName'),
     form.watch('companyShopAddress'),
-    form.watch('identityDocumentType'), // Changed from identityDocument
-    form.watch('identityDocumentNumber'), // Changed from documentNumber
-    form.watch('addressProofDocumentType'), // Changed from addressProofDocument
+    form.watch('identityDocumentType'), 
+    form.watch('identityDocumentNumber'), 
+    form.watch('addressProofDocumentType'), 
     form.watch('guarantorName'),
-    form.watch('guarantorDocumentType'), // Changed from guarantorDocumentName
+    form.watch('guarantorDocumentType'), 
     form.watch('guarantorDocumentNumber'),
     form.watch('guarantorMobileNumber'),
     form.watch('guarantorAddress'),
@@ -642,23 +642,6 @@ const LoanApplicationForm = ({
                       )} />
                       {identityDocType === 'Other' && <FormField control={form.control} name="identityDocumentOther" render={({ field }) => (<FormItem><FormLabel>Specify Other ID</FormLabel><FormControl><Input placeholder="Enter document name" {...field} disabled={isFormDisabled} /></FormControl><FormMessage /></FormItem>)} /> }
                       <FormField control={form.control} name="identityDocumentNumber" render={({ field }) => (<FormItem><FormLabel>ID Document Number</FormLabel><FormControl><Input placeholder="Document Number" {...field} disabled={isFormDisabled} /></FormControl><FormMessage /></FormItem>)} />
-                      
-                      <FormField control={form.control} name="addressProofDocumentType" render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Address Proof Type</FormLabel>
-                          <Select onValueChange={field.onChange} value={field.value} disabled={isFormDisabled}>
-                            <FormControl>
-                              <SelectTrigger><SelectValue placeholder="Select Address Proof" /></SelectTrigger>
-                            </FormControl>
-                            <SelectContent position="popper">
-                              {documentOptions.map(doc => <SelectItem key={doc} value={doc}>{doc}</SelectItem>)}
-                            </SelectContent>
-                          </Select>
-                          <FormMessage />
-                        </FormItem>
-                      )} />
-                      {addressProofDocType === 'Other' && <FormField control={form.control} name="addressProofDocumentOther" render={({ field }) => (<FormItem><FormLabel>Specify Other Address Proof</FormLabel><FormControl><Input placeholder="Enter document name" {...field} disabled={isFormDisabled} /></FormControl><FormMessage /></FormItem>)} />}
-                      <FormField control={form.control} name="addressProofDocumentNumber" render={({ field }) => (<FormItem><FormLabel>Address Proof Number</FormLabel><FormControl><Input placeholder="Proof Number" {...field} disabled={isFormDisabled} /></FormControl><FormMessage /></FormItem>)} />
                       
                       <FormItem>
                           <FormLabel>Customer Photo</FormLabel>
