@@ -355,7 +355,7 @@ const LoanApplicationForm = ({
         const translatedText = await translateToHindi(form.watch('identityDocumentType') || ''); 
         form.setValue('identityDocumentHindi', translatedText);
       }
-      if (form.watch('identityDocumentNumber') && !form.watch('documentNumberHindi')) { 
+      if (form.watch('identityDocumentNumber') && !form.watch('documentNumberHindi')) { // Assuming documentNumberHindi is for identityDocumentNumber
         const translatedText = await translateToHindi(form.watch('identityDocumentNumber') || ''); 
         form.setValue('documentNumberHindi', translatedText);
       }
@@ -566,7 +566,7 @@ const LoanApplicationForm = ({
                   </>
                 )}
               </div>
-          </div>
+              </div>
         </CardHeader>
         <CardContent className="p-4 md:p-6">
           <Form {...form}>
