@@ -1,0 +1,14 @@
+rules_version = '2';
+
+service firebase.storage {
+  match /b/{bucket}/o {
+    // DEFAULT DENY
+    // By default, deny all read and write access. This forces all file operations
+    // to be handled by a secure, server-side environment like a Cloud Function,
+    // which uses the Admin SDK and bypasses these client-facing rules.
+    // This is the most secure posture, preventing any unauthorized client access.
+    match /{allPaths=**} {
+      allow read, write: if false;
+    }
+  }
+}

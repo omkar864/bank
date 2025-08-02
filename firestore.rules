@@ -1,0 +1,68 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Helper function to check for admin role
+    function isAdmin() {
+      return request.auth.token.isAdmin == true;
+    }
+
+    // Rules for the 'users' collection
+    match /users/{userId} {
+      // Admins can read/write any user profile.
+      // A user can read/write their own profile.
+      allow read, write: if isAdmin() || request.auth.uid == userId;
+    }
+
+    // Allow admins to list the entire 'users' collection
+    match /users/{document=**} {
+      allow list: if isAdmin();
+    }
+    
+    // Rules for the 'branches' collection
+    match /branches/{branchId} {
+      // Admins can manage branches
+      allow read, write: if isAdmin();
+    }
+    
+    // Rules for the 'loanSchemes' collection
+    match /loanSchemes/{schemeName} {
+       // Admins can manage loan schemes
+      allow read, write: if isAdmin();
+    }
+
+    // Rules for 'loanApplications' and its subcollections
+    match /loanApplications/{appId} {
+      // An authenticated user can create a loan application for themselves.
+      allow create: if request.auth != null && request.resource.data.submittedByUid == request.auth.uid;
+
+      // Admins can read/update any application.
+      // The user who submitted the application can read it.
+      allow read, update: if isAdmin() || request.auth.uid == resource.data.submittedByUid;
+
+      // Only admins can delete applications.
+      allow delete: if isAdmin();
+
+      // Allow admins to list the entire collection.
+      // Allow non-admins to list ONLY their own applications.
+      allow list: if isAdmin() || (request.auth.uid != null && request.query.where.path == "submittedByUid" && request.query.where.op == "==" && request.query.where.value == request.auth.uid);
+
+      // Rules for the 'payments' and 'scheduledPayments' subcollections
+      match /{subcollection}/{paymentId} {
+        // Any authenticated user can create a payment (e.g., a collection agent).
+        // The original applicant can also view their own payment history.
+        allow read, create: if request.auth != null;
+        
+        // Only admins can edit or delete payment records.
+        allow update, delete: if isAdmin();
+      }
+    }
+    
+    // Default security rule: Deny all reads and writes to any collection not explicitly matched above.
+    // This is a critical security measure to prevent unintended data access.
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
