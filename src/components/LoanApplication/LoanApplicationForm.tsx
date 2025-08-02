@@ -29,7 +29,7 @@ import {Badge} from '@/components/ui/badge';
 import {useEffect, useCallback, useState, useRef} from 'react';
 import type { LoanApplicationData } from './LoanApplication';
 import type { LoanSchemeFormValues } from '../LoanSchemeManagement/SchemeCreateForm';
-import type { Branch } from '../BranchManagement/BranchManagement';
+import type { Branch } from '../BranchManagement/Branch';
 import { useToast } from '@/hooks/use-toast';
 import { getFunctions, httpsCallable } from 'firebase/functions';
 import { app } from '@/lib/firebase/clientApp';
@@ -709,7 +709,7 @@ const LoanApplicationForm = ({
                               <SelectTrigger><SelectValue placeholder="Select Security Type" /></SelectTrigger>
                             </FormControl>
                             <SelectContent position="popper">
-                              {securityOptions.map(opt => <SelectItem key={opt} value={opt}>{opt}</SelectItem>)}
+                              {documentOptions.map(doc => <SelectItem key={doc} value={doc}>{doc}</SelectItem>)}
                             </SelectContent>
                           </Select>
                           <FormMessage />
