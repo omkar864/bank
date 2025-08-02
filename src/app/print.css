@@ -1,0 +1,45 @@
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  /* Make the main printable area and its children visible */
+  .printable-area, .printable-area * {
+    visibility: visible;
+  }
+  .printable-area {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    font-size: 12px;
+  }
+  .no-print, .no-print * {
+    visibility: hidden;
+    display: none;
+  }
+  
+  .print-page {
+    page-break-after: always;
+  }
+  
+  .print-page:last-of-type {
+    page-break-after: auto;
+  }
+
+  .no-break-inside {
+    page-break-inside: avoid;
+  }
+
+  .signatures-section {
+    page-break-inside: avoid;
+    margin-top: 2rem;
+  }
+  
+  .printable-table, .printable-table td, .printable-table th {
+    border-color: #000 !important;
+  }
+
+  @page {
+    size: A4;
+    margin: 1cm;
+  }
+}

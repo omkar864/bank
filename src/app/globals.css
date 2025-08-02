@@ -1,0 +1,111 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import "./print.css";
+
+@layer base {
+  :root {
+    /* Theme based on PRD:
+       Primary color: Dark blue (#1A237E)
+       Secondary color: Light gray (#EEEEEE)
+       Accent: Teal (#00BCD4)
+    */
+    --background: 0 0% 100%; /* White */
+    --foreground: 224 71.4% 4.1%; /* Very Dark Blue/Black for text */
+
+    --card: 0 0% 100%;
+    --card-foreground: 224 71.4% 4.1%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 224 71.4% 4.1%;
+
+    --primary: 236 60% 30%; /* #1A237E - Dark Blue */
+    --primary-foreground: 210 20% 98%; /* Light text on primary */
+
+    --secondary: 0 0% 93.3%; /* #EEEEEE - Light Gray */
+    --secondary-foreground: 236 60% 30%; /* Dark blue text on light gray */
+
+    --muted: 0 0% 93.3%; /* Light Gray for muted backgrounds */
+    --muted-foreground: 220 8.9% 46.1%; /* Muted text color */
+
+    --accent: 187 100% 41.6%; /* #00BCD4 - Teal */
+    --accent-foreground: 0 0% 100%; /* White text on accent */
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 20% 98%;
+
+    --border: 220 13% 85%; /* A distinct gray for borders */
+    --input: 220 13% 85%;  /* Consistent with border for input fields */
+    --ring: 187 100% 41.6%; /* Teal for focus rings */
+
+    --radius: 0.5rem;
+    --chart-1: 220 70% 50%;
+    --chart-2: 160 60% 45%;
+    --chart-3: 30 80% 55%;
+    --chart-4: 280 75% 60%;
+    --chart-5: 340 85% 65%;
+
+    /* Sidebar specific variables */
+    --sidebar-background: 236 60% 30%; /* Using Primary color (Dark Blue #1A237E) */
+    --sidebar-foreground: 210 20% 98%; /* Light text on dark blue */
+    --sidebar-border: 236 60% 25%;    /* Slightly darker shade of primary for border */
+    --sidebar-accent: 236 60% 35%;     /* Slightly lighter shade of primary for hover/active */
+    --sidebar-accent-foreground: 210 20% 98%;
+    --sidebar-primary: 187 100% 41.6%; /* Teal for active/primary links in sidebar */
+    --sidebar-primary-foreground: 0 0% 100%; /* White text on teal */
+    --sidebar-ring: 187 100% 41.6%;
+  }
+
+  .dark {
+    --background: 224 71.4% 4.1%; /* Very dark blue, near black */
+    --foreground: 210 20% 98%; /* Light gray for text */
+
+    --card: 224 71.4% 4.1%;
+    --card-foreground: 210 20% 98%;
+
+    --popover: 215 27.9% 16.9%; /* Dark Gray - Changed from main background color */
+    --popover-foreground: 210 20% 98%; /* Light text on popover */
+
+    --primary: 187 100% 41.6%; /* Teal as primary in dark mode */
+    --primary-foreground: 224 71.4% 4.1%; /* Dark text for contrast on Teal */
+
+    --secondary: 215 27.9% 16.9%; /* Dark gray */
+    --secondary-foreground: 210 20% 98%; /* Light text on dark gray */
+
+    --muted: 215 27.9% 16.9%;
+    --muted-foreground: 217.9 10.6% 64.9%;
+
+    --accent: 187 100% 41.6%; /* Teal */
+    --accent-foreground: 224 71.4% 4.1%; /* Dark text on Teal */
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 20% 98%;
+
+    --border: 215 27.9% 25%; /* Lighter gray for borders in dark mode */
+    --input: 215 27.9% 16.9%; /* Darker input background */
+    --ring: 187 100% 41.6%; /* Teal for focus rings */
+
+    --chart-1: 210 70% 80%;
+    --chart-2: 160 60% 75%;
+    --chart-3: 30 80% 85%;
+    --chart-4: 280 75% 80%;
+    --chart-5: 340 85% 85%;
+
+    /* Dark Sidebar specific variables */
+    --sidebar-background: 224 71.4% 6%; /* Slightly lighter than main dark bg */
+    --sidebar-foreground: 210 20% 98%;
+    --sidebar-border: 215 27.9% 16.9%;
+    --sidebar-accent: 215 27.9% 25%;
+    --sidebar-accent-foreground: 210 20% 98%;
+    --sidebar-primary: 187 100% 41.6%; /* Teal for active links */
+    --sidebar-primary-foreground: 224 71.4% 4.1%; /* Dark text on teal */
+    --sidebar-ring: 187 100% 41.6%;
+  }
+}
+
+@layer base {
+  body {
+    @apply bg-background text-foreground;
+  }
+}
