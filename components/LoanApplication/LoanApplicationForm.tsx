@@ -11,7 +11,6 @@ import {
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -99,7 +98,7 @@ const loanApplicationSchema = z.object({
   finePerMissedPayment: z.string().optional(),
 });
 
-type LoanApplicationFormValues = z.infer<typeof loanApplicationSchema>;
+export type LoanApplicationFormValues = z.infer<typeof loanApplicationSchema>;
 
 interface LoanApplicationFormProps {
   translateToHindi: (text: string) => Promise<string>;
