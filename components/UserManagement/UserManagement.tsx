@@ -1,3 +1,4 @@
+
 'use client';
 
 import {
@@ -35,8 +36,15 @@ const userSchema = z.object({
 
 type UserFormValues = z.infer<typeof userSchema>;
 
+// Define a type for the user object in state
+interface User extends UserFormValues {
+  email: string;
+  password?: string;
+}
+
 const UserManagement = () => {
-  const [users, setUsers] = useState([]);
+  // Provide the explicit type to useState
+  const [users, setUsers] = useState<User[]>([]);
   const userForm = useForm<UserFormValues>({
     resolver: zodResolver(userSchema),
     defaultValues: {
