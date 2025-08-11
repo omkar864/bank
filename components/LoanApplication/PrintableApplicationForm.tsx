@@ -1,5 +1,5 @@
 import React from 'react';
-import type { LoanApplicationData } from './LoanApplication';
+import type { LoanApplicationData } from './LoanApplication.ts';
 
 interface PrintableApplicationFormProps {
   applicationToView?: LoanApplicationData | null;
