@@ -1,3 +1,4 @@
+
 'use client';
 
 import {
@@ -35,7 +36,7 @@ const loanSchemeSchema = z.object({
   lateFine: z.string(),
 });
 
-type LoanSchemeFormValues = z.infer<typeof loanSchemeSchema>;
+export type LoanSchemeFormValues = z.infer<typeof loanSchemeSchema>;
 
 interface SchemeCreateFormProps {
   onSubmit: (values: LoanSchemeFormValues) => void;
