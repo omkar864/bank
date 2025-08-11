@@ -1,3 +1,4 @@
+
 'use client';
 
 import {
@@ -219,107 +220,62 @@ const LoanApplicationForm = ({translateToHindi, loanSchemes}: LoanApplicationFor
       form.setValue('schemeSelection', selectedScheme.schemeName);
       form.setValue('lateFine', selectedScheme.lateFine);
     }
-  }, [form.watch('loanScheme'), loanSchemes, form]);
+  }, [form, form.watch('loanScheme'), loanSchemes]);
 
   useEffect(() => {
     calculateEMI();
-  }, [calculateEMI, form.watch('loanAmountApproved'), form.watch('interestRate'), form.watch('tenurePeriod'), form.watch('repaymentType')]);
+  }, [calculateEMI, form, form.watch('loanAmountApproved'), form.watch('interestRate'), form.watch('tenurePeriod'), form.watch('repaymentType')]);
 
   // Auto-translate effect
   useEffect(() => {
     const autoTranslate = async () => {
-      if (form.watch('customerName') && !form.watch('customerNameHindi')) {
-        const translatedName = await translateToHindi(form.watch('customerName'));
-        form.setValue('customerNameHindi', translatedName);
-      }
-      if (form.watch('dateOfBirth') && !form.watch('dateOfBirthHindi')) {
-        const translatedText = await translateToHindi(form.watch('dateOfBirth'));
-        form.setValue('dateOfBirthHindi', translatedText);
-      }
-      if (form.watch('fatherName') && !form.watch('fatherNameHindi')) {
-        const translatedText = await translateToHindi(form.watch('fatherName'));
-        form.setValue('fatherNameHindi', translatedText);
-      }
-      if (form.watch('motherName') && !form.watch('motherNameHindi')) {
-        const translatedText = await translateToHindi(form.watch('motherName'));
-        form.setValue('motherNameHindi', translatedText);
-      }
-      if (form.watch('husbandWifeName') && !form.watch('husbandWifeNameHindi')) {
-        const translatedText = await translateToHindi(form.watch('husbandWifeName'));
-        form.setValue('husbandWifeNameHindi', translatedText);
-      }
-      if (form.watch('mobileNumber') && !form.watch('mobileNumberHindi')) {
-        const translatedText = await translateToHindi(form.watch('mobileNumber'));
-        form.setValue('mobileNumberHindi', translatedText);
-      }
-      if (form.watch('alternateMobileNumber') && !form.watch('alternateMobileNumberHindi')) {
-        const translatedText = await translateToHindi(form.watch('alternateMobileNumber'));
-        form.setValue('alternateMobileNumberHindi', translatedText);
-      }
-      if (form.watch('residentialAddress') && !form.watch('residentialAddressHindi')) {
-        const translatedText = await translateToHindi(form.watch('residentialAddress'));
-        form.setValue('residentialAddressHindi', translatedText);
-      }
-      if (form.watch('permanentAddress') && !form.watch('permanentAddressHindi')) {
-        const translatedText = await translateToHindi(form.watch('permanentAddress'));
-        form.setValue('permanentAddressHindi', translatedText);
-      }
-      if (form.watch('companyShopName') && !form.watch('companyShopNameHindi')) {
-        const translatedText = await translateToHindi(form.watch('companyShopName'));
-        form.setValue('companyShopNameHindi', translatedText);
-      }
-      if (form.watch('companyShopAddress') && !form.watch('companyShopAddressHindi')) {
-        const translatedText = await translateToHindi(form.watch('companyShopAddress'));
-        form.setValue('companyShopAddressHindi', translatedText);
-      }
-      if (form.watch('identityDocument') && !form.watch('identityDocumentHindi')) {
-        const translatedText = await translateToHindi(form.watch('identityDocument'));
-        form.setValue('identityDocumentHindi', translatedText);
-      }
-      if (form.watch('documentNumber') && !form.watch('documentNumberHindi')) {
-        const translatedText = await translateToHindi(form.watch('documentNumber'));
-        form.setValue('documentNumberHindi', translatedText);
-      }
-      if (form.watch('addressProofDocument') && !form.watch('addressProofDocumentHindi')) {
-        const translatedText = await translateToHindi(form.watch('addressProofDocument'));
-        form.setValue('addressProofDocumentHindi', translatedText);
-      }
-      if (form.watch('guarantorName') && !form.watch('guarantorNameHindi')) {
-        const translatedText = await translateToHindi(form.watch('guarantorName'));
-        form.setValue('guarantorNameHindi', translatedName);
-      }
-      if (form.watch('guarantorDocumentName') && !form.watch('guarantorDocumentNameHindi')) {
-        const translatedText = await translateToHindi(form.watch('guarantorDocumentName'));
-        form.setValue('guarantorDocumentNameHindi', translatedText);
-      }
-      if (form.watch('guarantorDocumentNumber') && !form.watch('guarantorDocumentNumberHindi')) {
-        const translatedText = await translateToHindi(form.watch('guarantorDocumentNumber'));
-        form.setValue('guarantorDocumentNumberHindi', translatedText);
-      }
-      if (form.watch('guarantorMobileNumber') && !form.watch('guarantorMobileNumberHindi')) {
-        const translatedText = await translateToHindi(form.watch('guarantorMobileNumber'));
-        form.setValue('guarantorMobileNumberHindi', translatedText);
-      }
-      if (form.watch('guarantorAddress') && !form.watch('guarantorAddressHindi')) {
-        const translatedText = await translateToHindi(form.watch('guarantorAddress'));
-        form.setValue('guarantorAddressHindi', translatedText);
-      }
-      if (form.watch('annualIncome') && !form.watch('annualIncomeHindi')) {
-        const translatedText = await translateToHindi(form.watch('annualIncome'));
-        form.setValue('annualIncomeHindi', translatedText);
-      }
-      if (form.watch('monthlyIncome') && !form.watch('monthlyIncomeHindi')) {
-        const translatedText = await translateToHindi(form.watch('monthlyIncome'));
-        form.setValue('monthlyIncomeHindi', translatedText);
-      }
-      if (form.watch('loanAmountRequired') && !form.watch('loanAmountRequiredHindi')) {
-        const translatedText = await translateToHindi(form.watch('loanAmountRequired'));
-        form.setValue('loanAmountRequiredHindi', translatedText);
-      }
+      // Helper function to safely translate
+      const safeTranslate = async (fieldName: keyof LoanApplicationFormValues, hindiFieldName: keyof LoanApplicationFormValues) => {
+        const valueToTranslate = form.watch(fieldName);
+        const hindiValue = form.watch(hindiFieldName);
+
+        if (typeof valueToTranslate === 'string' && valueToTranslate.trim() && !hindiValue) {
+          try {
+            const translatedText = await translateToHindi(valueToTranslate);
+            form.setValue(hindiFieldName, translatedText);
+          } catch (error) {
+            console.error(`Translation failed for ${fieldName}:`, error);
+          }
+        }
+      };
+
+      await safeTranslate('customerName', 'customerNameHindi');
+      await safeTranslate('dateOfBirth', 'dateOfBirthHindi');
+      await safeTranslate('fatherName', 'fatherNameHindi');
+      await safeTranslate('motherName', 'motherNameHindi');
+      await safeTranslate('husbandWifeName', 'husbandWifeNameHindi');
+      await safeTranslate('mobileNumber', 'mobileNumberHindi');
+      await safeTranslate('alternateMobileNumber', 'alternateMobileNumberHindi');
+      await safeTranslate('residentialAddress', 'residentialAddressHindi');
+      await safeTranslate('permanentAddress', 'permanentAddressHindi');
+      await safeTranslate('companyShopName', 'companyShopNameHindi');
+      await safeTranslate('companyShopAddress', 'companyShopAddressHindi');
+      await safeTranslate('identityDocument', 'identityDocumentHindi');
+      await safeTranslate('documentNumber', 'documentNumberHindi');
+      await safeTranslate('addressProofDocument', 'addressProofDocumentHindi');
+      await safeTranslate('guarantorName', 'guarantorNameHindi');
+      await safeTranslate('guarantorDocumentName', 'guarantorDocumentNameHindi');
+      await safeTranslate('guarantorDocumentNumber', 'guarantorDocumentNumberHindi');
+      await safeTranslate('guarantorMobileNumber', 'guarantorMobileNumberHindi');
+      await safeTranslate('guarantorAddress', 'guarantorAddressHindi');
+      await safeTranslate('annualIncome', 'annualIncomeHindi');
+      await safeTranslate('monthlyIncome', 'monthlyIncomeHindi');
+      await safeTranslate('loanAmountRequired', 'loanAmountRequiredHindi');
     };
 
-    autoTranslate();
+    const translationDebounce = setTimeout(() => {
+        autoTranslate();
+    }, 500); // Debounce to avoid excessive API calls while typing
+
+    return () => clearTimeout(translationDebounce);
   }, [
+    form,
+    translateToHindi,
     form.watch('customerName'),
     form.watch('dateOfBirth'),
     form.watch('fatherName'),
@@ -342,7 +298,6 @@ const LoanApplicationForm = ({translateToHindi, loanSchemes}: LoanApplicationFor
     form.watch('annualIncome'),
     form.watch('monthlyIncome'),
     form.watch('loanAmountRequired'),
-    translateToHindi,
   ]);
 
   return (
@@ -652,7 +607,7 @@ const LoanApplicationForm = ({translateToHindi, loanSchemes}: LoanApplicationFor
                 <FormItem>
                   <FormLabel>Identity Document (पहचान दस्तावेज) (Aadhaar, PAN, Passport, etc.) Upload</FormLabel>
                   <FormControl>
-                    <Input type="file" {...field} disabled={form.getValues('isVerified')} />
+                    <Input type="file" {...field} disabled={form.getValues('isVerified')} value={field.value || ''} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -717,7 +672,7 @@ const LoanApplicationForm = ({translateToHindi, loanSchemes}: LoanApplicationFor
                 <FormItem>
                   <FormLabel>Address Proof Document (पते का प्रमाण दस्तावेज़) Upload</FormLabel>
                   <FormControl>
-                    <Input type="file" {...field} disabled={form.getValues('isVerified')} />
+                    <Input type="file" {...field} disabled={form.getValues('isVerified')} value={field.value || ''} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -782,7 +737,7 @@ const LoanApplicationForm = ({translateToHindi, loanSchemes}: LoanApplicationFor
                 <FormItem>
                   <FormLabel>Guarantor Document (दस्तावेज़) Upload</FormLabel>
                   <FormControl>
-                    <Input type="file" {...field} disabled={form.getValues('isVerified')} />
+                    <Input type="file" {...field} disabled={form.getValues('isVerified')} value={field.value || ''} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
