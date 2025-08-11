@@ -14,7 +14,7 @@
     "date-fns": "^3.6.0",
     "decimal.js": "^10.4.3",
     "firebase-admin": "^12.3.0",
-    "firebase-functions": "^6.4.0",
+    "firebase-functions": "^5.1.1",
     "next": "^15.4.1"
   },
   "devDependencies": {
